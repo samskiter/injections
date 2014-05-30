@@ -10,4 +10,7 @@
 
 @interface FakeReachabilityManager : AFNetworkReachabilityManager
 
+- (void)setOffline;
+- (void)setOnline;
+
 @end

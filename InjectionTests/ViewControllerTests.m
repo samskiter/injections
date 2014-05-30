@@ -1,34 +1,56 @@
-//
-//  InjectionTests.m
-//  InjectionTests
-//
-//  Created by Sean Dougherty on 5/28/14.
-//  Copyright (c) 2014 Sean Dougherty. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
+#import "Environment+Fake.h"
+#import "ViewController.h"
+#import "FakeReachabilityManager.h"
 
-@interface InjectionTests : XCTestCase
+
+@interface ViewControllerTests : XCTestCase
+
+@property (nonatomic, strong) ViewController *controller;
 
 @end
 
-@implementation InjectionTests
+
+@implementation ViewControllerTests
 
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.controller = (ViewController *)[storyboard instantiateInitialViewController];
+    [self.controller loadView];
 }
 
 - (void)tearDown
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testOnlineLabelDisplaysOfflineWhenOffline
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    FakeReachabilityManager *manager = (FakeReachabilityManager *)self.controller.reachabilityManager;
+    [manager setOffline];
+
+    [self.controller viewDidLoad];
+
+    NSString *expectedResult = @"offline";
+    NSString *text = self.controller.internetStatusLabel.text;
+
+    XCTAssertTrue([text isEqualToString:expectedResult], @"Strings are not equal %@ %@", text, expectedResult);
 }
+
+- (void)testOnlineLabelDisplaysOnlineWhenOnline
+{
+    FakeReachabilityManager *manager = (FakeReachabilityManager *)self.controller.reachabilityManager;
+    [manager setOnline];
+
+    [self.controller viewDidLoad];
+
+    NSString *expectedResult = @"online";
+    NSString *text = self.controller.internetStatusLabel.text;
+
+    XCTAssertTrue([text isEqualToString:expectedResult], @"Strings are not equal %@ %@", text, expectedResult);
+}
+
 
 @end

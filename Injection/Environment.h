@@ -1,13 +1,12 @@
-//
-//  Environment.h
-//  Injection
-//
-//  Created by Sean Dougherty on 5/28/14.
-//  Copyright (c) 2014 Sean Dougherty. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
+@class AFNetworkReachabilityManager;
+
 @interface Environment : NSObject
+
+@property (strong, nonatomic, readonly) AFNetworkReachabilityManager *reachabilityManager;
+
++ (Environment *)singleton;
+- (BOOL)isTestEnvironment;
 
 @end

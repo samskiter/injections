@@ -1,13 +1,11 @@
-//
-//  Environment+Fake.m
-//  Injection
-//
-//  Created by Sean Dougherty on 5/28/14.
-//  Copyright (c) 2014 Sean Dougherty. All rights reserved.
-//
-
 #import "Environment+Fake.h"
+#import "FakeReachabilityManager.h"
 
 @implementation Environment (Fake)
+
+- (void)initializeFakeServices
+{
+    [self setValue:[FakeReachabilityManager sharedManager] forKey:@"reachabilityManager"];
+}
 
 @end

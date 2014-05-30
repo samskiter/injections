@@ -1,13 +1,13 @@
-//
-//  ViewController.h
-//  Injection
-//
-//  Created by Sean Dougherty on 5/28/14.
-//  Copyright (c) 2014 Sean Dougherty. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
+@class AFNetworkReachabilityManager;
+
+
 @interface ViewController : UIViewController
+
+@property (nonatomic, weak) IBOutlet UILabel *internetStatusLabel;
+
+/* "Injected" properties -- Each should have a corresponding @dynamic directive */
+@property (strong, nonatomic) AFNetworkReachabilityManager *reachabilityManager;
 
 @end

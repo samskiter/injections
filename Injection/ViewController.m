@@ -1,29 +1,28 @@
-//
-//  ViewController.m
-//  Injection
-//
-//  Created by Sean Dougherty on 5/28/14.
-//  Copyright (c) 2014 Sean Dougherty. All rights reserved.
-//
-
 #import "ViewController.h"
-
-@interface ViewController ()
-
-@end
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 
 @implementation ViewController
+
+@dynamic reachabilityManager;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    [self displayOnlineStatus];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)displayOnlineStatus
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    BOOL reachable = self.reachabilityManager.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+
+    if (reachable)
+    {
+        self.internetStatusLabel.text = NSLocalizedString(@"online", nil);
+    }
+    else
+    {
+        self.internetStatusLabel.text = NSLocalizedString(@"offline", nil);
+    }
 }
 
 @end
